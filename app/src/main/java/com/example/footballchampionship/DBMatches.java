@@ -13,12 +13,16 @@ public class DBMatches {
     private static final String DATABASE_NAME = "simple.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "tableMatches";
+    private static final String TABLE_TEAMS = "tableTeams";
 
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_TEAMHOME = "TeamНоme";
     private static final String COLUMN_TEAMGUAST = "TeamGuest";
     private static final String COLUMN_GOALSHOME = "GoalsHome";
     private static final String COLUMN_GOALSGUAST = "GoalsGuast";
+
+    private static final String COLUMN_IDTEAM = "idTeam";
+    private static final String COLUMN_NAMETEAM = "nameTeam";
 
     private static final int NUM_COLUMN_ID = 0;
     private static final int NUM_COLUMN_TEAMHOME = 1;
@@ -101,7 +105,21 @@ public class DBMatches {
                     COLUMN_TEAMGUAST + " TEXT, " +
                     COLUMN_GOALSHOME + " INT,"+
                     COLUMN_GOALSGUAST+" INT);";
+
             db.execSQL(query);
+             query = "CREATE TABLE " + TABLE_TEAMS + " (" +
+                    COLUMN_IDTEAM + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_NAMETEAM+ " TEXT);";
+            db.execSQL(query);
+            ContentValues contentValues = new ContentValues();
+            String[]nameTeam = {"Ахмат", "Динамо М", "Зенит", "Локомотив", "Ростов", "Спартак М", "Торпедо М"};
+            for (int i = 0; i < nameTeam.length; i++) {
+                contentValues.clear();
+                contentValues.put(COLUMN_NAMETEAM, nameTeam[i]);
+                db.insert(TABLE_TEAMS, null, contentValues);
+            }
+
+
         }
 
         @Override

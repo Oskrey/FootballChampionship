@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ public class MainActivity extends Activity {
         registerForContextMenu(mListView);
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
