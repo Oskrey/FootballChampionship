@@ -1,6 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Football Championship</string>
-    <string name="title">Чемпионат России по футболу</string>
+    <string name="hello">Hello World, SimpleDBActivity!</string>
+    <string name="app_name">Футбол</string>
+    <string name="title">Чемпионат мира по футболу</string>
     <string name="teamhomefield">Команда хозяев</string>
     <string name="teamguestfield">Команда гостей</string>
     <string name="goalshomefield">Голы хозяев</string>
