@@ -37,7 +37,7 @@ public class DBMatches {
         mDataBase = mOpenHelper.getWritableDatabase();
     }
 
-    public long insert(String teamhouse,String teamguest,int goalshouse,int goalsguest) {
+    public long insert(int teamhouse,int teamguest,int goalshouse,int goalsguest) {
         ContentValues cv=new ContentValues();
         cv.put(COLUMN_TEAMHOME, teamhouse);
         cv.put(COLUMN_TEAMGUAST, teamguest);
@@ -63,12 +63,29 @@ public class DBMatches {
         mDataBase.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[] { String.valueOf(id) });
     }
 
+    public ArrayList<String> GetAll(){
+
+        ArrayList<String> list = new ArrayList<>();
+        Cursor cursor = mDataBase.query(TABLE_TEAMS,null,null,null,null,null,null);
+        if(cursor.moveToFirst()){
+            do{
+                int nameTeam = cursor.getColumnIndex(COLUMN_NAMETEAM);
+                list.add(cursor.getString(nameTeam));
+
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
+
+
+
+
     public Matches select(long id) {
         Cursor mCursor = mDataBase.query(TABLE_NAME, null, COLUMN_ID + " = ?", new String[]{String.valueOf(id)}, null, null, null);
 
         mCursor.moveToFirst();
-        String TeamHome = mCursor.getString(NUM_COLUMN_TEAMHOME);
-        String TeamGuest = mCursor.getString(NUM_COLUMN_TEAMGUAST);
+        int TeamHome = mCursor.getInt(NUM_COLUMN_TEAMHOME);
+        int TeamGuest = mCursor.getInt(NUM_COLUMN_TEAMGUAST);
         int GoalsHome = mCursor.getInt(NUM_COLUMN_GOALSHOME);
         int GoalsGuest=mCursor.getInt(NUM_COLUMN_GOALSGUEST);
         return new Matches(id, TeamHome, TeamGuest, GoalsHome,GoalsGuest);
@@ -77,19 +94,26 @@ public class DBMatches {
     public ArrayList<Matches> selectAll() {
         Cursor mCursor = mDataBase.query(TABLE_NAME, null, null, null, null, null, null);
 
-        ArrayList<Matches> arr = new ArrayList<Matches>();
+        ArrayList<Matches> arr = new ArrayList<>();
         mCursor.moveToFirst();
         if (!mCursor.isAfterLast()) {
             do {
                 long id = mCursor.getLong(NUM_COLUMN_ID);
-                String TeamHome = mCursor.getString(NUM_COLUMN_TEAMHOME);
-                String TeamGuest = mCursor.getString(NUM_COLUMN_TEAMGUAST);
+                int TeamHome = mCursor.getInt(NUM_COLUMN_TEAMHOME);
+                int TeamGuest = mCursor.getInt(NUM_COLUMN_TEAMGUAST);
                 int GoalsHome = mCursor.getInt(NUM_COLUMN_GOALSHOME);
                 int GoalsGuest=mCursor.getInt(NUM_COLUMN_GOALSGUEST);
                 arr.add(new Matches(id, TeamHome, TeamGuest, GoalsHome,GoalsGuest));
             } while (mCursor.moveToNext());
         }
         return arr;
+    }
+    public String getTeam(int id){
+        Cursor mCursor = mDataBase.query(TABLE_TEAMS, null, COLUMN_IDTEAM + " = ?", new String[]{String.valueOf(id)} , null, null, null, null);
+        mCursor.moveToFirst();
+        String ret = mCursor.getString(1);
+        return ret;
+
     }
 
     private class OpenHelper extends SQLiteOpenHelper {
@@ -101,8 +125,8 @@ public class DBMatches {
         public void onCreate(SQLiteDatabase db) {
             String query = "CREATE TABLE " + TABLE_NAME + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_TEAMHOME+ " TEXT, " +
-                    COLUMN_TEAMGUAST + " TEXT, " +
+                    COLUMN_TEAMHOME+ " INTEGER, " +
+                    COLUMN_TEAMGUAST + " INTEGER, " +
                     COLUMN_GOALSHOME + " INT,"+
                     COLUMN_GOALSGUAST+" INT);";
 
@@ -110,6 +134,7 @@ public class DBMatches {
              query = "CREATE TABLE " + TABLE_TEAMS + " (" +
                     COLUMN_IDTEAM + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_NAMETEAM+ " TEXT);";
+
             db.execSQL(query);
             ContentValues contentValues = new ContentValues();
             String[]nameTeam = {"Ахмат", "Динамо М", "Зенит", "Локомотив", "Ростов", "Спартак М", "Торпедо М"};

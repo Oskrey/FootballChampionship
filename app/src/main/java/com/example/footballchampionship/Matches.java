@@ -4,28 +4,28 @@ import java.io.Serializable;
 
 public class Matches implements Serializable{
     private long id;
-    private String teamhouse;
-    private String teamguest;
+    private int teamhouse;
+    private int teamguest;
     private int goalshouse;
     private int goalsguest;
 
-    public Matches (long id, String teamh, String teamg, int gh,int gg) {
+    public Matches (long id, int teamh, int teamg, int gh,int gg) {
         this.id = id;
         this.teamhouse = teamh;
         this.teamguest = teamg;
         this.goalshouse = gh;
-        this.goalsguest=gg;
+        this.goalsguest = gg;
     }
 
     public long getId() {
         return id;
     }
 
-    public String getTeamhouse() {
+    public int getTeamhouse() {
         return teamhouse;
     }
 
-    public String getTeamguest() {
+    public int getTeamguest() {
         return teamguest;
     }
 

@@ -165,8 +165,10 @@ public class MainActivity extends Activity {
 
 
             Matches md = arrayMyMatches.get(position);
-            vTeamHome.setText(md.getTeamhouse());
-            vTeamGuest.setText(md.getTeamguest());
+            String vth = mDBConnector.getTeam(md.getTeamhouse());
+
+            vTeamHome.setText(vth);
+            vTeamGuest.setText(mDBConnector.getTeam(md.getTeamguest())+ "");
             vTotal.setText(md.getGoalshouse()+":"+md.getGoalsguest());
 
             return convertView;

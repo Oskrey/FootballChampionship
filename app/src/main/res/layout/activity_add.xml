@@ -52,11 +52,10 @@
                         android:layout_height="wrap_content"
                         android:text="@string/teamhomefield" />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/TeamHome"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" />
+                        android:layout_height="35dp" />
 
                 </LinearLayout>
                 <LinearLayout
@@ -69,16 +68,16 @@
                         android:layout_height="wrap_content"
                         android:text="@string/teamguestfield" />
 
-                    <EditText
+                    <Spinner
                         android:id="@+id/TeamGuest"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text" >
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp">
 
                         <requestFocus />
-                    </EditText>
+                    </Spinner>
 
                 </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -113,12 +112,13 @@
 
                     <EditText
                         android:id="@+id/GoalsGuest"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text" />
 
                 </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
