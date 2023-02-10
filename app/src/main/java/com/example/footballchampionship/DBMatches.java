@@ -108,6 +108,23 @@ public class DBMatches {
         }
         return arr;
     }
+    public ArrayList<Matches> selectTeam(int idt) {
+        Cursor mCursor = mDataBase.query(TABLE_NAME, null, COLUMN_TEAMHOME + " = "+idt+" or "+ COLUMN_TEAMGUAST + " = "+idt, null, null, null, null);
+
+        ArrayList<Matches> arr = new ArrayList<>();
+        mCursor.moveToFirst();
+        if (!mCursor.isAfterLast()) {
+            do {
+                long id = mCursor.getLong(NUM_COLUMN_ID);
+                int TeamHome = mCursor.getInt(NUM_COLUMN_TEAMHOME);
+                int TeamGuest = mCursor.getInt(NUM_COLUMN_TEAMGUAST);
+                int GoalsHome = mCursor.getInt(NUM_COLUMN_GOALSHOME);
+                int GoalsGuest=mCursor.getInt(NUM_COLUMN_GOALSGUEST);
+                arr.add(new Matches(id, TeamHome, TeamGuest, GoalsHome,GoalsGuest));
+            } while (mCursor.moveToNext());
+        }
+        return arr;
+    }
     public String getTeam(int id){
         Cursor mCursor = mDataBase.query(TABLE_TEAMS, null, COLUMN_IDTEAM + " = ?", new String[]{String.valueOf(id)} , null, null, null, null);
         mCursor.moveToFirst();

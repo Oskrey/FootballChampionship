@@ -5,6 +5,11 @@
     android:orientation="vertical"
     tools:menu="@menu/context_menu">
 
+    <Spinner
+        android:id="@+id/teamselect"
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+
     <ListView
         android:id="@+id/list"
         android:layout_width="fill_parent"

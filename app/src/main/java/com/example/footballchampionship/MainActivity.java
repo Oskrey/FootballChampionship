@@ -16,9 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -45,7 +47,30 @@ public class MainActivity extends Activity {
         mListView.setAdapter(myAdapter);
         registerForContextMenu(mListView);
 
+        DBMatches dbMatches = new DBMatches(this);
+        ArrayList test= dbMatches.GetAll();
+        test.add("Все");
+        Spinner spinHome = (Spinner)findViewById(R.id.teamselect);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, test);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinHome.setAdapter(adapter);
+        spinHome.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+                if (spinHome.getSelectedItemPosition() == spinHome.getCount()-1)
+                    updateList();
+                else
+                    updateListSearch(spinHome.getSelectedItemPosition()+1);
+
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        spinHome.setSelection(spinHome.getCount()-1);
+
     }
+
 
 
 
@@ -106,7 +131,10 @@ public class MainActivity extends Activity {
         myAdapter.setArrayMyData(mDBConnector.selectAll());
         myAdapter.notifyDataSetChanged();
     }
-
+    private void updateListSearch (int id) {
+        myAdapter.setArrayMyData(mDBConnector.selectTeam(id));
+        myAdapter.notifyDataSetChanged();
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
