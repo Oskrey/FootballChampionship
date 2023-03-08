@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,8 +35,8 @@ public class AddActivity extends Activity {
 
         etGoalsHome=(EditText)findViewById(R.id.GoalsHome);
         etGoalsGuest=(EditText)findViewById(R.id.GoalsGuest);
-        btSave=(Button)findViewById(R.id.butSave);
-        btCancel=(Button)findViewById(R.id.butCancel);
+        btSave=(Button)findViewById(R.id.save);
+        btCancel=(Button)findViewById(R.id.btnExit);
 
         if(getIntent().hasExtra("Matches")){
             Matches matches=(Matches)getIntent().getSerializableExtra("Matches");

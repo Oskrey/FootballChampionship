@@ -35,6 +35,17 @@ public class MainActivity extends Activity {
 
     int ADD_ACTIVITY = 0;
     int UPDATE_ACTIVITY = 1;
+    public void update(){
+        DBMatches dbMatches = new DBMatches(this);
+        ArrayList test= dbMatches.GetAll();
+        test.add("Все");
+        Spinner spinHome = (Spinner)findViewById(R.id.teamselect);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, test);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinHome.setAdapter(adapter);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +107,12 @@ public class MainActivity extends Activity {
             case R.id.exit:
                 finish();
                 return true;
+            case R.id.addTeam:
+                Intent ii = new Intent(mContext, AddTeamActivity.class);
+                startActivityForResult (ii, 11);
+
+                update();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -140,7 +157,10 @@ public class MainActivity extends Activity {
 
         if (resultCode == Activity.RESULT_OK) {
             Matches md = (Matches) data.getExtras().getSerializable("Matches");
-            if (requestCode == UPDATE_ACTIVITY)
+            if (requestCode == 11){
+                mDBConnector.insertTeam(data.getExtras().getSerializable("Team").toString());
+                update();}
+            else if (requestCode == UPDATE_ACTIVITY)
                 mDBConnector.update(md);
             else
                 mDBConnector.insert(md.getTeamhouse(), md.getTeamguest(), md.getGoalshouse(), md.getGoalsguest());

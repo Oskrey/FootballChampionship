@@ -6,19 +6,24 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_foreground"
         android:label="@string/app_name">
+        <activity
+        android:theme="@style/Theme.Design.NoActionBar"
 
-        <activity android:name=".MainActivity"></activity>
+        android:name=".AddTeamActivity"
+            android:exported="false" />
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".LaubchActivity"
             android:exported="true"
-            android:theme="@style/Theme.Design.NoActionBar">>
+            android:theme="@style/Theme.Design.NoActionBar">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddActivity"></activity>
+        <activity android:name=".AddActivity" />
     </application>
 
 </manifest>
